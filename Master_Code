@@ -234,6 +234,35 @@ void magnet_detect_L()
    }
  }
 
+//*******************   smoothCh(Ch1,Ch2)  ***************************
+//Smooths Ch1 and Ch2 by averaging last twenty values
+//**************************************************************
+ void smoothCh(){
+   total1 = total1 - readings1[readIndex1];
+   total2 = total2 - readings2[readIndex2];
+  // read from the sensor:
+   readings1[readIndex1] = Ch1;
+   readings2[readIndex2] = Ch2;
+  // add the reading to the total:
+   total1 = total1 + readings1[readIndex1];
+   total2 = total2 + readings2[readIndex2];
+  // advance to the next position in the array:
+   readIndex1 = readIndex1 + 1;
+   readIndex2 = readIndex2 + 1;
+  // if we're at the end of the array wrap around to the beginning:
+   if (readIndex1 >= numReadings1) {
+     readIndex1 = 0;
+    }
+    if (readIndex2 >= numReadings2) {
+     readIndex2 = 0;
+    }
+  // calculate the average:
+   average1 = total1 / numReadings1;
+   average2 = total2 / numReadings2;
+   Ch1 = average1;
+   Ch2 = average2;
+ }
+
 //*******************   pulseMotors  ***************************
 //pulses either mapped or direct signals generated from mixLimits
 //**************************************************************
@@ -466,31 +495,8 @@ void loop()
  Ch5 = pulseIn(8, HIGH, 21000);  // Capture pulse width on Channel 5
  Ch6 = pulseIn(7, HIGH, 21000);  // Capture pulse width on Channel 6
 
- total1 = total1 - readings1[readIndex1];
- total2 = total2 - readings2[readIndex2];
-// read from the sensor:
- readings1[readIndex1] = Ch1;
- readings2[readIndex2] = Ch2;
-// add the reading to the total:
- total1 = total1 + readings1[readIndex1];
- total2 = total2 + readings2[readIndex2];
-// advance to the next position in the array:
- readIndex1 = readIndex1 + 1;
- readIndex2 = readIndex2 + 1;
-// if we're at the end of the array wrap around to the beginning:
- if (readIndex1 >= numReadings1) {
-   readIndex1 = 0;
-  }
-  if (readIndex2 >= numReadings2) {
-   readIndex2 = 0;
-  }
-// calculate the average:
- average1 = total1 / numReadings1;
- average2 = total2 / numReadings2;
- Ch1 = average1;
- Ch2 = average2;
+smoothCh();
 
- 
   
  L_PhotoValue = analogRead(L_PhotoPin); //Read the value of the left photo sensor
  R_PhotoValue = analogRead(R_PhotoPin); //Read the value of the right photo sensor
