@@ -1,3 +1,4 @@
+
 /*
   RC Base
   5/10/17 by Mike Fuerst and John Van Orden 
@@ -184,6 +185,8 @@ void printSensors()
   Serial.println(L_ProxValue);
   Serial.print("R_ProxValue = ");
   Serial.println(R_ProxValue);
+  Serial.print("CL_ProxValue = ");
+  Serial.println(CL_ProxValue);
 }
 
 
@@ -271,7 +274,7 @@ void pulseMotors() {
   //*** Take the standard range of 1000 to 2000 and frame it to your own minimum and maximum
   //*** for each wheel.
   Rwheel = map(Rwheel, 1000, 2000, 1290, 1800); // >1500 is reverse
-  Lwheel = map(Lwheel, 1000, 2000, 1200, 1800);// >1500 is forward
+  Lwheel = map(Lwheel, 1000, 2000, 1125, 1800);// >1500 is forward
  
   L_Servo.writeMicroseconds(Lwheel);
   R_Servo.writeMicroseconds(Rwheel);
@@ -509,7 +512,7 @@ smoothCh();
 //  printWheelCalcs();
 //  printChannels();
 //  RPM_Calc();
-//printSensors();
+printSensors();
 
 //  int wallDifference = L_ProxValue-R_ProxValue;
 //  Serial.print("Diff: ");
@@ -519,15 +522,15 @@ smoothCh();
 //  Serial.print("Right: ");
 //  Serial.println(R_ProxValue);
 //  delay(100);
-
- int Delta = L_PhotoValue - R_PhotoValue;
-  Serial.println(" Sensor Read Out ");
-  Serial.print("L_PhotoValue = ");
-  Serial.println(L_PhotoValue);
-  Serial.print("R_PhotoValue = ");
-  Serial.println(R_PhotoValue);
-  Serial.print("Delta = ");
-  Serial.println(Delta);
+//
+// int Delta = L_PhotoValue - R_PhotoValue;
+//  Serial.println(" Sensor Read Out ");
+//  Serial.print("L_PhotoValue = ");
+//  Serial.println(L_PhotoValue);
+//  Serial.print("R_PhotoValue = ");
+//  Serial.println(R_PhotoValue);
+//  Serial.print("Delta = ");
+//  Serial.println(Delta);
 
 
 //The medkit has been delivered
